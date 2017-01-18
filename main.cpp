@@ -3,19 +3,19 @@
 
 using namespace std;
 
-//ïîèñê ÍÎÄ (íàèáîëüøåãî îáùåãî äåëèòåëÿ) ïî ðàñøèðåííîìó àëãîðèòìó Åâêëèäà
+//Ð¿Ð¾Ð¸ÑÐº ÐÐžÐ” (Ð½Ð°Ð¸Ð±Ð¾Ð»ÑŒÑˆÐµÐ³Ð¾ Ð¾Ð±Ñ‰ÐµÐ³Ð¾ Ð´ÐµÐ»Ð¸Ñ‚ÐµÐ»Ñ) Ð¿Ð¾ Ñ€Ð°ÑÑˆÐ¸Ñ€ÐµÐ½Ð½Ð¾Ð¼Ñƒ Ð°Ð»Ð³Ð¾Ñ€Ð¸Ñ‚Ð¼Ñƒ Ð•Ð²ÐºÐ»Ð¸Ð´Ð°
 int gcd (int a, int b, int & x, int & y)
 {
-	if (a == 0)
+    if (a == 0)
     {
-		x = 0; y = 1;
-		return b;
-	}
-	int x1, y1;
-	int d = gcd (b%a, a, x1, y1);
-	x = y1 - (b / a) * x1;
-	y = x1;
-	return d;
+        x = 0; y = 1;
+        return b;
+    }
+    int x1, y1;
+    int d = gcd (b%a, a, x1, y1);
+    x = y1 - (b / a) * x1;
+    y = x1;
+    return d;
 }
 
 void unusual_diofant(int a, int b, int c)
@@ -30,89 +30,90 @@ void unusual_diofant(int a, int b, int c)
         return;
     }
 
-	if (a == 0 && b != 0)
+    if (a == 0 && b != 0)
         swap(a, b);
 
-	if (b == 0) {
-		// a*x + 0*y = c;  ëþáîé y
-		if (c%a == 0 && c / a > 0)
-            cout << "inf";
-		else
-            cout << "none";
-		return;
-	}
-
-	if (a < 0 && b < 0)
+    if (b == 0)
     {
-		a *= -1;
+        // a*x + 0*y = c;  Ð»ÑŽÐ±Ð¾Ð¹ y
+        if (c%a == 0 && c / a > 0)
+            cout << "inf";
+        else
+            cout << "none";
+        return;
+    }
+
+    if (a < 0 && b < 0)
+    {
+        a *= -1;
         b *= -1;
         c *= -1;
-	}
+    }
 
-	if (a < 0 && b > 0)
+    if (a < 0 && b > 0)
         swap(a, b);
 
-	int x, y, g = gcd(a, b, x, y);
-	// a*x + b*y = g; a > 0
-	if (c % g != 0)
+    int x, y, g = gcd(a, b, x, y);
+    // a*x + b*y = g; a > 0
+    if (c % g != 0)
     {
-		cout << "none";
-		return;
-	}
+        cout << "none";
+        return;
+    }
 
-	int k = c/g;
-	// îäíî ðåøåíèå: a*x*k + b*y*k = c
-	x *= k; y *= k;
+    int k = c/g;
+    // Ð¾Ð´Ð½Ð¾ Ñ€ÐµÑˆÐµÐ½Ð¸Ðµ: a*x*k + b*y*k = c
+    x *= k; y *= k;
 
-	// a*(x + b/g) + b*(y - a/g) = c;
-	int p1 = b / g, p2 = -a / g;
+    // a*(x + b/g) + b*(y - a/g) = c;
+    int p1 = b / g, p2 = -a / g;
 
-	if (p1 > 0 && p2 > 0)
+    if (p1 > 0 && p2 > 0)
     {
-		cout << "inf";
-		return;
-	}
+        cout << "inf";
+        return;
+    }
 
-	if (x < 0)
+    if (x < 0)
     {
-		if (p1 < 0)
-		{
-		    p1 *= -1;
-		    p2 *= -1;
-		}
-		while (x < 0)
-        {
-            x += p1;
-            y += p2;
-        }
-	}
-
-	if (y < 0)
-    {
-		if (p2 < 0)
+        if (p1 < 0)
         {
             p1 *= -1;
             p2 *= -1;
         }
-		while (y < 0)
+        while (x < 0)
         {
             x += p1;
             y += p2;
         }
-	}
+    }
 
-	if (x < 0 || y < 0)
+    if (y < 0)
     {
-		cout << "none";
-		return;
-	}
+        if (p2 < 0)
+        {
+            p1 *= -1;
+            p2 *= -1;
+        }
+        while (y < 0)
+        {
+            x += p1;
+            y += p2;
+        }
+    }
 
-	while (x > 0 && y > 0)
+    if (x < 0 || y < 0)
     {
-		cout << x << ' ' << y << endl;
-		x += p1;
+        cout << "none";
+        return;
+    }
+
+    while (x > 0 && y > 0)
+    {
+        cout << x << ' ' << y << endl;
+        x += p1;
         y += p2;
-	}
+    }
 }
 
 int main()
